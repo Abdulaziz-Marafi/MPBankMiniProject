@@ -1,0 +1,52 @@
+﻿@using MPBankMiniProject.Models.ViewModels;
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+
+<form asp-action="Register" asp-controller="Account" enctype="multipart/form-data" method="post" class="col-4">
+	<div asp-validation-summary="All"></div>
+		<div class="form-group">
+			<label asp-for="FName"></label>
+			<input asp-for="FName" class="form-control" />
+			<span asp-validation-for="FName" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="LName"></label>
+			<input asp-for="LName" class="form-control" />
+			<span asp-validation-for="LName" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="Email"></label>
+			<input asp-for="Email" class="form-control" />
+			<span asp-validation-for="Email" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="ConfirmEmail"></label>
+			<input asp-for="ConfirmEmail" class="form-control" />
+			<span asp-validation-for="ConfirmEmail" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="Password"></label>
+			<input asp-for="Password" class="form-control" />
+			<span asp-validation-for="Password" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="ConfirmPassword"></label>
+			<input asp-for="ConfirmPassword" class="form-control" />
+			<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+		</div>
+	<div class="form-group">
+		<label asp-for="Image"></label>
+		<input asp-for="Image" class="form-control" />
+		<span asp-validation-for="Image" class="text-danger"></span>
+	</div>
+		
+	<div class="form-group">
+		<button type="submit" class="form-group btn btn-outline-primary m-2">Register</button>
+		<a asp-action="Login" asp-controller="Account" class="form-group btn btn-outline-secondary m-2">Login</a>
+	</div>
+
+</form>
