@@ -1,7 +1,32 @@
-﻿@model ApplicationUser 
+﻿@model UserTransactionViewModel
+
 @{
     ViewData["Title"] = "Transaction";
 }
 
-<h1>Transaction Page</h1>
+<h1>Transaction</h1>
+
+<h4>Balance: @ViewBag.Balance</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Transaction" asp-controller="Home">
+            <div asp-validation-summary="All" class="text-danger">
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-danger" name="submit" id="Withdraw" value="Withdraw" />
+                <input type="submit" class="btn btn-primary" name="submit" id="Deposit" value="Deposit" />
+            </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Display">Back to List</a>
+</div>
 

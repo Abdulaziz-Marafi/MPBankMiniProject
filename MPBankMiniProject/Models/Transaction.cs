@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MPBankMiniProject.Models
 {
@@ -15,13 +16,18 @@ namespace MPBankMiniProject.Models
         public float Amount { get; set; }
 
         [Required]
-        public DateTime TransactionDate {  get; set; } 
+        public DateTime TransactionDate {  get; set; }
 
-
+        // FK
+        [ForeignKey(nameof(ApplicationUser))]
+        public string ApplicationUserId {  get; set; }
+        public ApplicationUser? ApplicationUser { get; set; }
+        
         public enum TransactionType
         {
             Withdraw,
-            Deposit
+            Deposit,
+            Transfer
         }
     }
 }
