@@ -1,8 +1,10 @@
 using System.Diagnostics;
+using System.Reflection;
 using System.Transactions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using MPBankMiniProject.Data;
@@ -147,7 +149,6 @@ namespace MPBankMiniProject.Controllers
         }
 
         [HttpGet]
-
         public async Task<IActionResult> UpdateProfile()
         {
             var r = await userManager.GetUserAsync(User);
@@ -218,18 +219,52 @@ namespace MPBankMiniProject.Controllers
 
             return View(users);
         }
-        public async Task<IActionResult> TransactionsList()
+        public async Task<IActionResult> TransactionsList(string sortOrder, string typeFilter)
         {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.TypeFilter = typeFilter;
             var curr = await userManager.GetUserAsync(User);
-            var transactions = db.Transactions.Where(tran => tran.ApplicationUserId == curr.Id)
-            .Select(tran => new UserTransactionViewModel
+            if (curr == null)
             {
-                Amount = tran.Amount,
-                TransactionDate = tran.TransactionDate,
-                Type = (UserTransactionViewModel.TransactionType)tran.Type
+                return NotFound();
+            }
+
+            var transactions = db.Transactions.Where(tran => tran.ApplicationUserId == curr.Id).AsQueryable();
+
+            if (!string.IsNullOrEmpty(typeFilter) && Enum.TryParse(typeFilter, out Models.Transaction.TransactionType parsedType))
+            {
+                transactions = transactions.Where(t => t.Type == parsedType);
+            }
+
+            switch (sortOrder)
+            {
+                case "amount_desc":
+                    transactions = transactions.OrderByDescending(t => t.Amount);
+                    break;
+                case "Amount":
+                    transactions = transactions.OrderBy(t => t.Amount);
+                    break;
+                case "date_desc":
+                    transactions = transactions.OrderByDescending(t => t.TransactionDate);
+                    break;
+                case "Date":
+                    transactions = transactions.OrderBy(t => t.TransactionDate);
+                    break;
+                default:
+                    transactions = transactions.OrderBy(t => t.TransactionDate);
+                    break;
+            }
+
+            var model = transactions.Select(t => new UserTransactionViewModel
+            {
+                TransactionDate = t.TransactionDate,
+                Amount = t.Amount,
+                Type = (UserTransactionViewModel.TransactionType)t.Type
             }).ToList();
-            return View(transactions);
+
+            return View(model);
         }
+        
 
         public async Task<IActionResult> Transfer(string? id)
         {

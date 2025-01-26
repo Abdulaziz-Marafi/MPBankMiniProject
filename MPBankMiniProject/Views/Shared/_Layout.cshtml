@@ -27,20 +27,26 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Transaction">Actions</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UpdateProfile">Update Profile</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="TransactionsList">Transactions</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="DisplayAllUsers">All Users</a>
                         </li>
+
+                    </ul>
+                </div>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-right">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UpdateProfile">Update Profile</a>
+                        </li>
                         <li class="nav-item">
                             <form asp-action="Logout" asp-controller="Account" method="post">
-                                <input type="submit" class="btn btn-link" value="Logout @User.Identity!.Name" />
+                                <input type="submit" class="btn bg-danger" value="Logout @User.Identity!.Name" />
                             </form>
                         </li>
                     </ul>
+                    
                 </div>
             </div>
         </nav>

@@ -4,7 +4,7 @@
 	ViewData["Title"] = "DisplayAllUsers";
 }
 
-<h1>DisplayAllUsers</h1>
+<h1>All Users:</h1>
 
 <div class="container">
     <div class="row">
@@ -12,7 +12,7 @@
         {
             <div class="col-md-4 mb-4">
                 <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="~/Images/@user.Img" alt="Card image cap">
+                    <img class="img-thumbnail card-img-top" src="~/Images/@user.Img" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">@user.FName @user.LName</h5>
                         <p class="card-text">@Html.DisplayNameFor(x => x.Id): @user.Id</p>
@@ -22,9 +22,7 @@
                         <li class="list-group-item">@Html.DisplayNameFor(x => x.Email): @user.Email </li>
                     </ul>
                     <div class="card-body">
-                        <a asp-action="Transfer" asp-controller="Home" asp-route-id="@user.Id" class="btn btn-outline-primary">Transfer</a>
-                        <a href="#" class="card-link">Card link</a>
-                        
+                        <a asp-action="Transfer" asp-controller="Home" asp-route-id="@user.Id" class="btn btn-outline-primary">Transfer</a>                        
                     </div>
                 </div>
             </div>
